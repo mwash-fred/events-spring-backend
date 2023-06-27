@@ -1,38 +1,36 @@
 package apps.myuzinc.events.dao.Roles;
 
-import apps.myuzinc.events.utils.sql.CrudOperations;
+import apps.myuzinc.events.dto.RoleDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@Service @Transactional
 @RequiredArgsConstructor
-public class RoleService implements CrudOperations<Role> {
+public class RoleService {
+    public static final String ROLE_NOT_FOUND = "Role could not be retrieved.";
     private final RoleRepository roleRepository;
 
-    @Override
-    public Role save(Role record) {
+    @PreAuthorize("hasAuthority('role:inquire')")
+    public List<RoleDto> allRoles(){
         return null;
     }
 
-    @Override
-    public Role read(String uid) {
+    @PreAuthorize("hasAuthority('role:inquire')")
+    public RoleDto read(String uid){
         return null;
     }
 
-    @Override
-    public Role update(Role record) {
+    @PreAuthorize("hasAuthority('role:update')")
+    public RoleDto updateRole(String uid, RoleDto roleDto){
         return null;
     }
 
-    @Override
-    public Role delete(Role uid) {
-        return null;
-    }
-
-    @Override
-    public List<Role> getAll() {
-        return null;
+    @PreAuthorize("hasAuthority('role:add')")
+    public RoleDto create(RoleDto roleDto){
+        return  null;
     }
 }

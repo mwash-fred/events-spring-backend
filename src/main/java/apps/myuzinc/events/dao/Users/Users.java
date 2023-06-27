@@ -1,9 +1,11 @@
 package apps.myuzinc.events.dao.Users;
 
+import apps.myuzinc.events.dao.Roles.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,11 +26,24 @@ public class Users {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
+    private Boolean isEnabled;
+    @Column(nullable = false)
+    private Boolean isCredentialsExpired;
+    @Column(nullable = false)
+    private Boolean isAccountLocked;
+    @Column(nullable = false)
+    private Boolean isAccountExpired;
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date postedTime;
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedTime;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles;
 
     @PrePersist()
     private void prePersist(){
