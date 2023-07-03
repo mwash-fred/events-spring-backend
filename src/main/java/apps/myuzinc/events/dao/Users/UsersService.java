@@ -3,7 +3,10 @@ package apps.myuzinc.events.dao.Users;
 import apps.myuzinc.events.dto.CredentialsDto;
 import apps.myuzinc.events.dto.LoginDto;
 import apps.myuzinc.events.dto.UserDto;
+import apps.myuzinc.events.exceptions.EmailAlreadyTakenException;
+import apps.myuzinc.events.exceptions.PhoneNumberAlreadyInUse;
 import apps.myuzinc.events.security.jwt.JwtUtils;
+import apps.myuzinc.events.utils.ModelDtoMapper;
 import apps.myuzinc.events.utils.sql.CrudOperations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,11 +27,19 @@ public class UsersService implements CrudOperations<UserDto> {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+    private final ModelDtoMapper modelDtoMapper;
 
 
     @Override
     public UserDto save(UserDto record) {
-        return null;
+        Users users = modelDtoMapper.userDTOToModel(record);
+        if(usersRepository.existsByEmail(users.getEmail())){
+            throw new EmailAlreadyTakenException("Email Already Taken");
+        }
+        if(usersRepository.existsByMobileNo(users.getMobileNo())){
+            throw  new PhoneNumberAlreadyInUse("Phone Number Already Taken");
+        }
+        return modelDtoMapper.userModelTODTO(usersRepository.save(users));
     }
 
     @Override
