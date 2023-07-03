@@ -71,6 +71,10 @@ public class UserInitializer implements ApplicationRunner {
                             .email("admin@myuzinc.com")
                             .mobileNo("254708881885")
                             .name("Myuzinc Admin")
+                            .isEnabled(true)
+                            .isCredentialsExpired(false)
+                            .isAccountLocked(false)
+                            .isAccountExpired(false)
                             .password(passwordEncoder.encode("password"))
                     .build()
             );
