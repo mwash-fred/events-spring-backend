@@ -34,6 +34,7 @@ public class UsersService implements CrudOperations<UserDto> {
     @Override
     public UserDto save(UserDto record) {
         Users users = modelDtoMapper.userDTOToModel(record);
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
         if(usersRepository.existsByEmail(users.getEmail())){
             throw new EmailAlreadyTakenException("Email Already Taken");
         }

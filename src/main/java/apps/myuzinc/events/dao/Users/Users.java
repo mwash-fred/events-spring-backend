@@ -54,7 +54,6 @@ public class Users {
         this.isAccountLocked = false;
         this.isCredentialsExpired = false;
         this.isEnabled = true;
-
     }
 
     @PreUpdate
