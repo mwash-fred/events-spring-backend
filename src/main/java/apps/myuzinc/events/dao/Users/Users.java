@@ -50,6 +50,11 @@ public class Users {
         this.uid = UUID.randomUUID().toString();
         this.postedTime = new Date();
         this.modifiedTime = new Date();
+        this.isAccountExpired =false;
+        this.isAccountLocked = false;
+        this.isCredentialsExpired = false;
+        this.isEnabled = true;
+
     }
 
     @PreUpdate
