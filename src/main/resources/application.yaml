@@ -19,3 +19,8 @@ spring:
     properties:
       hibernate:
         format_sql: false
+
+application:
+  app:
+    jwtSecret: pF6ytE+5VB0T6b6o/A98WUG1wgu/Zj7g5WvLwMJ8ZGSg+vyEhhgLOXlnnJeITzI9z16TwgFqBNDmDrDl+tl7+g==
+    jwtExpirationMs: 86400000
