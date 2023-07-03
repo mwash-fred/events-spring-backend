@@ -8,6 +8,8 @@ import apps.myuzinc.events.dto.RoleDto;
 import apps.myuzinc.events.dto.UserDto;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -23,7 +25,11 @@ public class ModelDtoMapper {
                 .isEnabled(dto.isEnabled())
                 .isCredentialsExpired(dto.isCredentialsExpired())
                 .password(dto.password())
-                .roles(dto.roles().stream().map(this::roleDTOTOModel).collect(Collectors.toList()))
+                .roles(Optional.ofNullable(dto.roles())
+                        .map(roles -> roles.stream()
+                                .map(this::roleDTOTOModel)
+                                .collect(Collectors.toList()))
+                        .orElse(Collections.emptyList()))
                 .build();
         return usersFunction.apply(userDto);
     }
